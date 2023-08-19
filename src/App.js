@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import {useEffect} from "react";
+import axios from "axios";
+import IndexRouter from "./router/IndexRouter";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App(){
+
+    useEffect(()=>{
+            axios.get("/ajax/movieOnInfoList?token=&optimus_uuid=74B5F0A032A711EB82DD6B9282E93C676D27D7B9731D4E608D7612C3E708C120&optimus_risk_level=71&optimus_code=10").then(res=>{
+                console.log(res.data)
+            })
+
+    },[])
+
+
+    return
+    <IndexRouter></IndexRouter>
 }
 
-export default App;
+export  default  App;
