@@ -9,6 +9,7 @@ import RightList from "./right-manage/RightList";
 import NoPermission from "./nopermission/NoPermisson";
 import {Layout, theme} from "antd";
 import {Content} from "antd/es/layout/layout";
+import './NewsSandBox.css';
 
 
 

@@ -1,7 +1,5 @@
 import { Layout, Menu } from 'antd';
 import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
