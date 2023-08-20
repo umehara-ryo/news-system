@@ -72,10 +72,27 @@ export default function RightList() {
         });
     }
     const deleteMethod = (item)=>{
-        console.log(item);
-        setDataSourse(dataSource.filter(data=>data.id !== item.id));
-        axios.delete(`http://localhost:5000/rights/${item.id}`);
-
+        if(item.grade===1) {
+            console.log(item);
+            setDataSourse(dataSource.filter(data => data.id !== item.id));
+            axios.delete(`http://localhost:5000/rights/${item.id}`);
+        }else {
+            const rightId = item.rightId;
+            let list = dataSource.filter(data => data.id === rightId)
+            console.log(list)
+            list[0].children = list[0].children.filter(data => data.id !== item.id);
+            console.log(list)
+            console.log(item.id)
+            console.log(list[0].children)
+            const newData = dataSource.filter(()=>true);
+            newData.forEach(item=>{
+                if(item.id === rightId){
+                    item.children = list[0].children;
+                }
+            })
+            setDataSourse(newData);
+            //axios.delete(`http://localhost:5000/childrens/${item.id}`);
+        }
     }
 
     return (
