@@ -1,65 +1,68 @@
+import React,{useEffect,useState} from 'react'
 import { Layout, Menu } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import './index.css'
-import {withRouter} from "react-router-dom";
+import {withRouter} from 'react-router-dom'
+import {
+  UserOutlined
+} from '@ant-design/icons';
+import axios from 'axios'
+const { Sider } = Layout;
+const { SubMenu } = Menu
 
-function getItem(label, key, icon, children, type) {
-    return {
-        key,
-        icon,
-        children,
-        label,
-        type,
-    };
+const iconList = {
+  "/home":<UserOutlined />,
+  "/user-manage":<UserOutlined />,
+  "/user-manage/list":<UserOutlined />,
+  "/right-manage":<UserOutlined />,
+  "/right-manage/role/list":<UserOutlined />,
+  "/right-manage/right/list":<UserOutlined />
+  //.......
 }
-const items = [
-    getItem('ホーム', '/home', <MailOutlined />),
-    getItem('ユーザーマネジメント', '/user-manage', <AppstoreOutlined />, [
-        getItem('ユーザーリスト', '/user-manage/list'),
-    ]),
-    {
-        type: 'divider',
-    },
-    getItem('権限管理', '/right-manage', <SettingOutlined />, [
-        getItem('ロールリスト', '/right-manage/role/list'),
-        getItem('権限リスト', '/right-manage/right/list'),
-    ]),
-    getItem('Group', 'grp', null, [getItem('Option 13', '13'), getItem('Option 14', '14')], 'group'),
-];
 
-function SideMenu(props){
 
-    const {Sider} = Layout;
-    const onClick = (e) => {
-        console.log(props, e);
-        props.history.push(e.key);
-    };
+function SideMenu(props) {
+  const [menu, setMenu] = useState([])
+  useEffect(()=>{
+    axios.get("http://localhost:5000/rights?_embed=children").then(res=>{
+      console.log(res.data)
+      setMenu(res.data)
+    })
+  },[])
 
-    return(
-        <Sider trigger={null} collapsible collapsed={false} >
-            <div className="logo">グローバルニュース発信管理システム</div>
-            <Menu
-                theme='dark'
-                onClick={onClick}
-                style={{
-                    width: 200,
-                }}
-                defaultSelectedKeys={['/home']}
-                defaultOpenKeys={['/home']}
-                mode="inline"
-                items={items}
-                //キミの
-                //スべきであることを
-                //しなくても
-                //だいじなことをやると
-                //いい
 
-                //すればよいという
-                //きもちを捨てても
-                //だいじょうぶな
-                //ような気がする
-            />
-        </Sider>
-    )
+  const checkPagePermission = (item)=>{
+    return item.pagepermisson
+  }
+  const renderMenu = (menuList)=>{
+    return menuList.map(item=>{
+      if(item.children?.length>0 && checkPagePermission(item)){
+        return <SubMenu key={item.key} icon={iconList[item.key]} title={item.title}>
+          { renderMenu(item.children) }
+        </SubMenu>
+      }
+
+      return checkPagePermission(item) && <Menu.Item key={item.key} icon={iconList[item.key]}  onClick={()=>{
+        //  console.log(props)
+        props.history.push(item.key)
+      }}>{item.title}</Menu.Item>
+    })
+  }
+
+   //console.log(props.location.pathname)
+  const selectKeys = [props.location.pathname]
+  const openKeys = ["/"+props.location.pathname.split("/")[1]]
+
+  return (
+      <Sider trigger={null} collapsible collapsed={false} >
+        <div style={{display:"flex",height:"100%","flexDirection":"column"}}>
+          <div className="logo" >グローバルニュースシステム</div>
+          <div style={{flex:1,"overflow":"auto"}}>
+            <Menu theme="dark" mode="inline" selectedKeys={selectKeys} className="aaaaaaa" defaultOpenKeys={openKeys}>
+              {renderMenu(menu)}
+            </Menu>
+          </div>
+        </div>
+      </Sider>
+  )
 }
-export default withRouter(SideMenu);
+export default withRouter(SideMenu)
