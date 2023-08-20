@@ -1,6 +1,8 @@
 import { Layout, Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import './index.css'
+import {withRouter} from "react-router-dom";
+
 function getItem(label, key, icon, children, type) {
     return {
         key,
@@ -25,11 +27,12 @@ const items = [
     getItem('Group', 'grp', null, [getItem('Option 13', '13'), getItem('Option 14', '14')], 'group'),
 ];
 
-export default function SideMenu(){
+function SideMenu(props){
 
     const {Sider} = Layout;
     const onClick = (e) => {
-        console.log('click ', e);
+        console.log(props, e);
+        props.history.push(e.key);
     };
 
     return(
@@ -41,11 +44,12 @@ export default function SideMenu(){
                 style={{
                     width: 200,
                 }}
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
+                defaultSelectedKeys={['/home']}
+                defaultOpenKeys={['/home']}
                 mode="inline"
                 items={items}
             />
         </Sider>
     )
 }
+export default withRouter(SideMenu);
