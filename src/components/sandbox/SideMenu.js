@@ -48,6 +48,16 @@ function SideMenu(props){
                 defaultOpenKeys={['/home']}
                 mode="inline"
                 items={items}
+                //キミの
+                //スべきであることを
+                //しなくても
+                //だいじなことをやると
+                //いい
+
+                //すればよいという
+                //きもちを捨てても
+                //だいじょうぶな
+                //ような気がする
             />
         </Sider>
     )
