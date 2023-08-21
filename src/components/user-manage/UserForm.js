@@ -1,14 +1,16 @@
 import {Form, Modal, Select} from "antd";
 import Input from "antd/es/input/Input";
 import {Option} from "antd/es/mentions";
-import React from "react";
+import React, {forwardRef, useState} from "react";
 
-export default function UserForm(props){
+const UserForm = forwardRef((props,ref) =>{
 
     const {regionList,roleList} = props;
 
+    const [isDisabled,setIsDisabled] = useState(false);
+
     return(
-            <Form
+            <Form ref={ref}
                 layout="vertical"
             >
                 <Form.Item
@@ -38,14 +40,14 @@ export default function UserForm(props){
                 <Form.Item
                     name="region"
                     label="地域"
-                    rules={[
+                    rules={isDisabled ? [] : [
                         {
                             required: true,
-                            message: 'パスワードをご入力ください!',
+                            message: '地域をお選びください!',
                         },
                     ]}
                 >
-                    <Select>
+                    <Select disabled={isDisabled}>
                         {
                             regionList.map((item) => {
                                     return <Option value={item.value} key={item.id}>{item.title}</Option>
@@ -61,11 +63,23 @@ export default function UserForm(props){
                     rules={[
                         {
                             required: true,
-                            message: 'パスワードをご入力ください!',
+                            message: 'ロールをお選びください!',
                         },
                     ]}
                 >
-                    <Select>
+                    <Select onChange={(value)=>{
+
+                        if(value === 1){
+                            setIsDisabled(true);
+                            ref.current.setFieldsValue({
+                                region:""
+                            })
+                        }else {
+                            setIsDisabled(false);
+                            console.log(isDisabled);
+                        }
+
+                    }}>
                         {
                             roleList.map((item) => {
                                     return <Option value={item.id} key={item.id}>{item.roleName}</Option>
@@ -76,4 +90,5 @@ export default function UserForm(props){
                 </Form.Item>
             </Form>
     )
-}
+})
+export default UserForm;

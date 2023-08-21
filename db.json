@@ -71,6 +71,42 @@
       "region": "アジア",
       "roleId": 3,
       "id": 8
+    },
+    {
+      "username": "成田凌",
+      "password": "123456",
+      "region": "南極",
+      "roleId": 2,
+      "roleState": true,
+      "default": false,
+      "id": 9
+    },
+    {
+      "username": "花奏",
+      "password": "123456",
+      "region": "アジア",
+      "roleId": 2,
+      "roleState": true,
+      "default": false,
+      "id": 10
+    },
+    {
+      "username": "梅原凌",
+      "password": "123456",
+      "region": "ヨーロッパ",
+      "roleId": 2,
+      "roleState": true,
+      "default": false,
+      "id": 11
+    },
+    {
+      "username": "梅原",
+      "password": "123456",
+      "region": "ヨーロッパ",
+      "roleId": 2,
+      "roleState": true,
+      "default": false,
+      "id": 12
     }
   ],
   "roles": [

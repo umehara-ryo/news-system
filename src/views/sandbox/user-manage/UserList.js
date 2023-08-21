@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Button, Table, Modal, Tag, Popover, Switch, Form, Select} from "antd";
 import axios from "axios";
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
@@ -8,15 +8,16 @@ import UserForm from "../../../components/user-manage/UserForm";
 
 export default function UserList() {
 
-    const [dataSource, setDataSourse] = useState([])
+    const [dataSource, setDataSource] = useState([])
     const [open, setOpen] = useState(false)
     const [roleList, setRoleList] = useState([])
     const [regionList, setRegionList] = useState([])
+    const addForm = useRef(null);
 
 
     useEffect(() => {
         axios.get('http://localhost:5000/users?_expand=role').then(res => {
-            setDataSourse(res.data)
+            setDataSource(res.data)
         })
     }, [])
 
@@ -94,6 +95,27 @@ export default function UserList() {
     const deleteMethod = (item) => {
 
     }
+    const addFormOk = ()=>
+    {
+        console.log('ok');
+        addForm.current.validateFields().then(value=>{
+            console.log(value);
+
+            axios.post(`http://localhost:5000/users`,{
+                ...value,
+                'roleState':true,
+                'default':false,
+            }).then(()=> axios.get('http://localhost:5000/users?_expand=role').then(res => {
+                setDataSource(res.data)
+            }));//axios.postのthenメソッドにaxios.getを重ねる
+
+
+            //setDataSourceはデータベースに挿入し、IDを返す後の仕事
+            setOpen(false);
+        }).catch(err=>{
+            console.log(err);
+        });
+    }
 
     return (
         <div>
@@ -105,11 +127,9 @@ export default function UserList() {
                 okText="追加"
                 cancelText="キャンセル"
                 onCancel={() => setOpen(false)}
-                onOk={() => {
-                    console.log('ok')
-                }}
+                onOk={() => addFormOk()}
             >
-                <UserForm regionList={regionList} roleList={roleList}></UserForm>
+                <UserForm regionList={regionList} roleList={roleList} ref={addForm}></UserForm>
             </Modal>
 
 
