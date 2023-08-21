@@ -3,8 +3,7 @@ import {Button, Table, Modal, Tag, Popover, Switch, Form, Select} from "antd";
 import axios from "axios";
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
 import {ExclamationCircleOutlined} from '@ant-design/icons';
-import Input from "antd/es/input/Input";
-import {Option} from "antd/es/mentions";
+import UserForm from "../../../components/user-manage/UserForm";
 
 
 export default function UserList() {
@@ -110,73 +109,7 @@ export default function UserList() {
                     console.log('ok')
                 }}
             >
-                <Form
-                    layout="vertical"
-                >
-                    <Form.Item
-                        name="username"
-                        label="ユーザー名"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'ユーザー名をご入力ください!',
-                            },
-                        ]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        label="パスワード"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'パスワードをご入力ください!',
-                            },
-                        ]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item
-                        name="region"
-                        label="地域"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'パスワードをご入力ください!',
-                            },
-                        ]}
-                    >
-                        <Select>
-                            {
-                                regionList.map((item) => {
-                                        return <Option value={item.value} key={item.id}>{item.title}</Option>
-                                    }
-                                )
-
-                            }
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        name="roleId"
-                        label="ロール"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'パスワードをご入力ください!',
-                            },
-                        ]}
-                    >
-                        <Select>
-                            {
-                                roleList.map((item) => {
-                                        return <Option value={item.id} key={item.id}>{item.roleName}</Option>
-                                    }
-                                )
-                            }
-                        </Select>
-                    </Form.Item>
-                </Form>
+                <UserForm regionList={regionList} roleList={roleList}></UserForm>
             </Modal>
 
 
