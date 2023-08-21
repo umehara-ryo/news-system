@@ -10,16 +10,11 @@ export default function RoleList() {
    const [isModalOpen,setIsModalOpen] = useState(false);
    const [treeData,setTreeData] = useState([]);
    const [currentRights,setCurrentRights] = useState([]);
+   const [currentId,setCurrentId] = useState(0);
 
 
-    const showModal = (item) => {
-        setIsModalOpen(true);
-        console.log(item)
-        setCurrentRights(item.rights);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
+
+
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -104,8 +99,32 @@ export default function RoleList() {
     };
     const onCheck = (checkedKeys, info) => {
         console.log('onCheck', checkedKeys, info);
-        setCurrentRights(checkedKeys);
+        setCurrentRights(checkedKeys.checked);
     }
+    const showModal = (item) => {
+        setIsModalOpen(true);
+        console.log(item)
+        setCurrentRights(item.rights);
+        setCurrentId(item.id);
+    };
+
+    const handleOk = () => {
+        setDataSource(dataSource.map(item=>{
+            if(item.id === currentId){
+                return{
+                    ...item,
+                    rights:currentRights
+                }
+            }
+            return item;
+        }))
+
+        axios.patch(`http://localhost:5000/roles/${currentId}`,{
+            rights:currentRights
+        })
+
+        setIsModalOpen(false);
+    };
 
     return (
         <div>

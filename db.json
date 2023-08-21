@@ -140,7 +140,6 @@
       "roleName": "エリアエディタ",
       "roleType": 3,
       "rights": [
-        "/home",
         "/news-manage",
         "/news-manage/list",
         "/news-manage/add",
@@ -152,7 +151,8 @@
         "/publish-manage",
         "/publish-manage/unpublished",
         "/publish-manage/published",
-        "/publish-manage/sunset"
+        "/publish-manage/sunset",
+        "/home"
       ]
     }
   ],
