@@ -398,37 +398,37 @@
     {
       "id": 1,
       "title": "アジア",
-      "value": "亚洲"
+      "value": "アジア"
     },
     {
       "id": 2,
       "title": "ヨーロッパ",
-      "value": "欧洲"
+      "value": "ヨーロッパ"
     },
     {
       "id": 3,
       "title": "北アメリカ",
-      "value": "北美洲"
+      "value": "北アメリカ"
     },
     {
       "id": 4,
       "title": "南アメリカ",
-      "value": "南美洲"
+      "value": "南アメリカ"
     },
     {
       "id": 5,
       "title": "アフリカ",
-      "value": "非洲"
+      "value": "アフリカ"
     },
     {
       "id": 6,
       "title": "オセアニア",
-      "value": "大洋洲"
+      "value": "オセアニア"
     },
     {
       "id": 7,
       "title": "南極",
-      "value": "南极洲"
+      "value": "南極"
     }
   ],
   "news": [
