@@ -31,7 +31,7 @@ function SideMenu(props) {
 
 
   const checkPagePermission = (item)=>{
-    return item.pagepermisson === 1 ? true : undefined;
+    return item.pagepermisson === 1 ? true : undefined ;
   }
   const renderMenu = (menuList)=>{
     return menuList.map(item=>{
