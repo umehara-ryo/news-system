@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Table,Modal, Tag} from "antd";
+import {Button, Table, Modal, Tag, Popover, Switch} from "antd";
 import axios from "axios";
 import { DeleteOutlined,EditOutlined} from '@ant-design/icons';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -19,6 +19,8 @@ export default function RightList() {
                 setDataSourse(res.data)
             })
     },[])
+
+
 
     const columns = [
         {
@@ -46,13 +48,30 @@ export default function RightList() {
             title: '操作',
             render: (item)=>{
                 return　<div>
-                    <Button type="primary" shape="circle" icon={<EditOutlined/>}
-                    ></Button>
+                    <Popover  content={<div style={{textAlign:'center'}}>
+                        <Switch checked={item.pagepermisson}　onChange={()=>switchMethod(item)}></Switch>
+                    </div>} title="変更項目"　trigger={item.pagepermisson !== undefined ? 'click' : null}>
+                        <Button type="primary" shape="circle" icon={<EditOutlined/>} disabled={!item.pagepermisson}
+                        ></Button>
+                    </Popover>
+
+
                     <Button danger shape="circle" icon={<DeleteOutlined/>}  onClick={()=>confirmDelete(item)}></Button>
                 </div>
             }
         },
     ];
+
+   const switchMethod = (item)=>{
+       item.pagepermisson = item.pagepermisson === 1 ? 0 : 1;
+       console.log(item);
+       setDataSourse([...dataSource]);
+       if (item.grade===1){
+           axios.patch(`http://localhost:5000/rights/${item.id}`,{pagepermisson : item.pagepermisson});
+       }else {
+           axios.patch(`http://localhost:5000/children/${item.id}`,{pagepermisson : item.pagepermisson});
+       }
+   };
 
     const {confirm} = Modal;
     const confirmDelete = (item)=>{
@@ -81,9 +100,9 @@ export default function RightList() {
             let list = dataSource.filter(data => data.id === rightId)
             console.log(list)
             list[0].children = list[0].children.filter(data => data.id !== item.id);
-            console.log(list)
-            console.log(item.id)
-            console.log(list[0].children)
+            // console.log(list)
+            // console.log(item.id)
+            // console.log(list[0].children)
             const newData = dataSource.filter(()=>true);
             newData.forEach(item=>{
                 if(item.id === rightId){
@@ -91,7 +110,7 @@ export default function RightList() {
                 }
             })
             setDataSourse(newData);
-            //axios.delete(`http://localhost:5000/childrens/${item.id}`);
+            //axios.delete(`http://localhost:5000/children/${item.id}`);
         }
     }
 
