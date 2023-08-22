@@ -8,9 +8,9 @@ import Dropdown from "antd/es/dropdown/dropdown";
 import type { MenuProps } from 'antd';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import Avatar from "antd/es/avatar/avatar";
+import {withRouter} from 'react-router-dom'
 
-
-export default function TopHeader(){
+function TopHeader(props){
 
     const {Header} = Layout;
 
@@ -49,7 +49,14 @@ export default function TopHeader(){
         {
             key: '4',
             danger: true,
-            label: '戻る',
+            label:  (
+                <a onClick={()=>{
+                    localStorage.removeItem('token');
+                    props.history.replace('/login');
+                }}>
+                    戻る
+                </a>
+            ),
         },
     ];
 
@@ -89,3 +96,4 @@ export default function TopHeader(){
         </div>
     )
 }
+export default withRouter(TopHeader);
