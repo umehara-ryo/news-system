@@ -12,7 +12,7 @@
     {
       "username": "七瀬",
       "password": "123",
-      "roleState": false,
+      "roleState": true,
       "default": false,
       "region": "アジア",
       "roleId": 2,

@@ -1,13 +1,24 @@
 import React from 'react'
 import Input from "antd/es/input/Input";
-import {Button, Form} from "antd";
+import {Button, Form, message} from "antd";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import './Login.css';
+import axios from "axios";
 
-export default function Login() {
+export default function Login(props) {
 
     const onFinish = (values) => {
         console.log(values);
+        axios.get(`http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`).then(res=>{
+
+            if(res.data.length===1){
+                localStorage.setItem('token',JSON.stringify(res.data[0]));
+                //console.log(res.data[0]);
+                props.history.push('/');
+            }else {
+                message.error("ユーザー名とパスワードを正しく入力してください！")
+            }
+        })
 
     }
 

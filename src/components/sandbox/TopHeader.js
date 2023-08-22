@@ -12,39 +12,25 @@ import {withRouter} from 'react-router-dom'
 
 function TopHeader(props){
 
-    const {Header} = Layout;
-
     const [collapsed, setCollapsed] = useState(false);
+
+    const {role:{roleName},username} = JSON.parse(localStorage.getItem('token'));
+
+
+    const {Header} = Layout;
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
     const items = [
         {
-            key: '1',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    1st menu item
-                </a>
-            ),
-        },
-        {
             key: '2',
             label: (
                 <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                    2nd menu item
+                    {roleName}
                 </a>
             ),
             icon: <SmileOutlined />
-        },
-        {
-            key: '3',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                    3rd menu item
-                </a>
-            ),
-            disabled: false
         },
         {
             key: '4',
@@ -80,7 +66,7 @@ function TopHeader(props){
                 />
 
                 <div style={{float:"right"}}>
-                    <span>adminようこそ</span>
+                    <span>{username}、ようこそ</span>
 
                     <Dropdown menu={{ items }}>
                         <a onClick={(e) => e.preventDefault()}>
