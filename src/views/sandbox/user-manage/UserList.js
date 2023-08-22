@@ -10,9 +10,12 @@ export default function UserList() {
 
     const [dataSource, setDataSource] = useState([])
     const [open, setOpen] = useState(false)
+    const [updateOpen, setUpdateOpen] = useState(false)
     const [roleList, setRoleList] = useState([])
     const [regionList, setRegionList] = useState([])
+    const [isUpdateDisabled, setIsUpdateDisabled] = useState(false)
     const addForm = useRef(null);
+    const updateForm = useRef(null);
 
 
     useEffect(() => {
@@ -68,6 +71,7 @@ export default function UserList() {
             render: (item) => {
                 return <div>
                     <Button type="primary" shape="circle" icon={<EditOutlined/>} disabled={item.default}
+                            onClick={()=>handleUpdate(item)}
                     ></Button>
                     <Button danger shape="circle" icon={<DeleteOutlined/>} onClick={() => confirmDelete(item)}
                             disabled={item.default}></Button>
@@ -84,6 +88,23 @@ export default function UserList() {
       axios.patch(`http://localhost:5000/users/${item.id}`,{
           roleState: item.roleState
       })
+    }
+
+    //情報変更
+     const handleUpdate = (item) => {
+      console.log(item);
+      setTimeout(()=>{
+          setUpdateOpen(true);
+          if(item.roleId===1){
+              setIsUpdateDisabled(true);
+              //禁止
+          }else {
+              setIsUpdateDisabled(false);
+              //禁止キャンセル
+          }
+          updateForm.current.setFieldsValue(item);
+      },0);
+
     }
 
 
@@ -110,6 +131,8 @@ export default function UserList() {
         axios.delete(`http://localhost:5000/users/${item.id}`);
 
     }
+
+    //フォームで情報を追加
     const addFormOk = ()=>
     {
         console.log('ok');
@@ -132,6 +155,12 @@ export default function UserList() {
         });
     }
 
+    //変更確認
+    const updateFormOk = () => {
+
+      
+    }
+
     return (
         <div>
             <Button type='primary' onClick={() => setOpen(true)}>新規追加</Button>
@@ -145,6 +174,18 @@ export default function UserList() {
                 onOk={() => addFormOk()}
             >
                 <UserForm regionList={regionList} roleList={roleList} ref={addForm}></UserForm>
+            </Modal>
+
+            <Modal
+                open={updateOpen}
+                title="情報変更"
+                okText="変更"
+                cancelText="キャンセル"
+                onCancel={() => setUpdateOpen(false)}
+                onOk={() => updateFormOk()}
+            >
+                <UserForm regionList={regionList} roleList={roleList} ref={updateForm}
+                          isUpdateDisabled={isUpdateDisabled}></UserForm>
             </Modal>
 
 

@@ -1,13 +1,17 @@
 import {Form, Modal, Select} from "antd";
 import Input from "antd/es/input/Input";
 import {Option} from "antd/es/mentions";
-import React, {forwardRef, useState} from "react";
+import React, {forwardRef, useEffect, useState} from "react";
 
 const UserForm = forwardRef((props,ref) =>{
 
-    const {regionList,roleList} = props;
+    const {regionList,roleList, isUpdateDisabled} = props;
 
     const [isDisabled,setIsDisabled] = useState(false);
+
+    useEffect(()=>{
+        setIsDisabled(isUpdateDisabled);
+    },[isUpdateDisabled])
 
     return(
             <Form ref={ref}
