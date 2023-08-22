@@ -14,8 +14,11 @@ export default function UserList() {
     const [roleList, setRoleList] = useState([])
     const [regionList, setRegionList] = useState([])
     const [isUpdateDisabled, setIsUpdateDisabled] = useState(false)
+    const [currentUpdate, setCurrentUpdate] = useState(null)
+
     const addForm = useRef(null);
     const updateForm = useRef(null);
+
 
 
     useEffect(() => {
@@ -92,6 +95,10 @@ export default function UserList() {
 
     //情報変更
      const handleUpdate = (item) => {
+
+        //変更するオブジェクトを保存
+        setCurrentUpdate(item);
+
       console.log(item);
       setTimeout(()=>{
           setUpdateOpen(true);
@@ -157,8 +164,31 @@ export default function UserList() {
 
     //変更確認
     const updateFormOk = () => {
+        updateForm.current.validateFields().then(value=>{
+            console.log(value);
 
-      
+            //dataSource更新
+            setDataSource(dataSource.map(item=>{
+                if(item.id === currentUpdate.id){
+                    return {
+                        ...item,
+                        ...value,
+                        role:roleList.filter(data=>data.id===value.roleId)[0]
+                    }
+                }
+                return item;
+            }))
+            //postMapping
+            axios.patch(`http://localhost:5000/users/${currentUpdate.id}`,value);
+
+
+        });
+
+
+
+
+        //ポップアップウィンドウを閉める
+        setUpdateOpen(false);
     }
 
     return (
