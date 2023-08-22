@@ -19,11 +19,11 @@ export default function UserList() {
     const addForm = useRef(null);
     const updateForm = useRef(null);
 
-
+    const {roleId,region} = JSON.parse(localStorage.getItem('token'));
 
     useEffect(() => {
         axios.get('http://localhost:5000/users?_expand=role').then(res => {
-            setDataSource(res.data)
+            setDataSource( res.data.filter(item=>{return roleId < item.roleId && region===item.region || region===''}))
         })
     }, [])
 

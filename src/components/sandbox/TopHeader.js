@@ -66,7 +66,7 @@ function TopHeader(props){
                 />
 
                 <div style={{float:"right"}}>
-                    <span>{username}、ようこそ</span>
+                    <span><span style={{color:'#1890ff'}}>{username}</span>、ようこそ</span>
 
                     <Dropdown menu={{ items }}>
                         <a onClick={(e) => e.preventDefault()}>
