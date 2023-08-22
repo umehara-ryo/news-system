@@ -57,7 +57,9 @@ export default function UserList() {
             title: 'ユーザー状態',
             dataIndex: 'roleState',
             render: (roleState, item) => {
-                return <Switch checked={{roleState}} disabled={item.default}></Switch>
+                return <Switch checked={item.roleState} disabled={item.default}
+                onChange={()=>handleChange(item)}
+                ></Switch>
             }
 
         },
@@ -74,8 +76,19 @@ export default function UserList() {
         },
     ];
 
+    //状態変更
+    const handleChange = (item) => {
+      console.log(item);
+      item.roleState = !item.roleState;
+      setDataSource([...dataSource]);
+      axios.patch(`http://localhost:5000/users/${item.id}`,{
+          roleState: item.roleState
+      })
+    }
+
 
     const {confirm} = Modal;
+    //データ削除
     const confirmDelete = (item) => {
         confirm({
             title: 'Confirm',
