@@ -98,15 +98,6 @@
       "roleState": true,
       "default": false,
       "id": 11
-    },
-    {
-      "username": "梅原",
-      "password": "123456",
-      "region": "ヨーロッパ",
-      "roleId": 2,
-      "roleState": true,
-      "default": false,
-      "id": 12
     }
   ],
   "roles": [

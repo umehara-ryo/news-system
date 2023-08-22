@@ -93,6 +93,8 @@ export default function UserList() {
         });
     }
     const deleteMethod = (item) => {
+        setDataSource(dataSource.filter(data=>data.id!==item.id));
+        axios.delete(`http://localhost:5000/users/${item.id}`);
 
     }
     const addFormOk = ()=>
