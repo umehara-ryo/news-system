@@ -44,6 +44,13 @@ export default function UserList() {
         {
             title: '地域',
             dataIndex: 'region',
+            filters:[...regionList.map(item=>{return {
+                text:item.title,
+                value:item.value
+            }})],
+
+            onFilter:(value,item)=>item.region===value,
+
             render: (region) => {
                 return <b>{region === "" ? 'グローバル' : region}</b>
             }
