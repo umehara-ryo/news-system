@@ -5,13 +5,54 @@ import React, {forwardRef, useEffect, useState} from "react";
 
 const UserForm = forwardRef((props,ref) =>{
 
-    const {regionList,roleList, isUpdateDisabled} = props;
+    const {regionList,roleList, isUpdateDisabled,isUpdate} = props;
 
     const [isDisabled,setIsDisabled] = useState(false);
 
     useEffect(()=>{
         setIsDisabled(isUpdateDisabled);
     },[isUpdateDisabled])
+
+    const {roleId,region} = JSON.parse(localStorage.getItem('token'));
+
+    const checkRegionDisabled = (item) => {
+        //変更業務
+        if(isUpdate===1){
+            //superAdminの場合
+            if(roleId===1){
+                return false;
+            }else{
+                return true;
+            }
+        //追加業務
+        }else {
+            //superAdminの場合
+            if(roleId===1){
+                return false;
+            }else{
+               return region !== item.value;
+            }
+        }
+    }
+    const checkRoleDisabled = (item) => {
+        //変更業務
+        if(isUpdate===1){
+            //superAdminの場合
+            if(roleId===1){
+                return false;
+            }else{
+                return roleId >= item.id;
+            }
+        //追加業務
+        }else {
+            //superAdminの場合
+            if(roleId===1){
+                return false;
+            }else{
+               return roleId >= item.id;
+            }
+        }
+    }
 
     return(
             <Form ref={ref}
@@ -54,7 +95,7 @@ const UserForm = forwardRef((props,ref) =>{
                     <Select disabled={isDisabled}>
                         {
                             regionList.map((item) => {
-                                    return <Option value={item.value} key={item.id}>{item.title}</Option>
+                                    return <Select.Option  disabled={checkRegionDisabled(item)} value={item.value} key={item.id}>{item.title}</Select.Option>
                                 }
                             )
 
@@ -80,13 +121,13 @@ const UserForm = forwardRef((props,ref) =>{
                             })
                         }else {
                             setIsDisabled(false);
-                            console.log(isDisabled);
+                            //console.log(isDisabled);
                         }
 
                     }}>
                         {
                             roleList.map((item) => {
-                                    return <Option value={item.id} key={item.id}>{item.roleName}</Option>
+                                    return <Select.Option disabled={checkRoleDisabled(item)} value={item.id} key={item.id}>{item.roleName}</Select.Option>
                                 }
                             )
                         }

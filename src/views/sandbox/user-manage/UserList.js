@@ -23,7 +23,7 @@ export default function UserList() {
 
     useEffect(() => {
         axios.get('http://localhost:5000/users?_expand=role').then(res => {
-            setDataSource( res.data.filter(item=>{return roleId < item.roleId && region===item.region || region===''}))
+            setDataSource( res.data.filter(item=>{return roleId <= item.roleId && region===item.region || region===''}))
         })
     }, [])
 
@@ -116,6 +116,7 @@ export default function UserList() {
               setIsUpdateDisabled(false);
               //禁止キャンセル
           }
+          //todo  データ再表示
           updateForm.current.setFieldsValue(item);
       },0);
 
@@ -222,7 +223,7 @@ export default function UserList() {
                 onOk={() => updateFormOk()}
             >
                 <UserForm regionList={regionList} roleList={roleList} ref={updateForm}
-                          isUpdateDisabled={isUpdateDisabled}></UserForm>
+                          isUpdateDisabled={isUpdateDisabled} isUpdate={1}></UserForm>
             </Modal>
 
 
