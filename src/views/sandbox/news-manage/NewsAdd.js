@@ -2,13 +2,16 @@ import {Button, Form, Input, Select, Steps} from 'antd';
 import {useEffect, useRef, useState} from "react";
 import style from './News.module.css'
 import axios from "axios";
+import NewsEditor from "../../../components/news-manage/NewsEditor";
 const {Option} = Select;
+
 
 export default function NewsAdd() {
 
     const NewForm = useRef(null);
 
     const [current, setCurrent] = useState(0);
+
     const [categoryList, setCategoryList] = useState([]);
 
     useEffect(()=>{
@@ -22,8 +25,8 @@ export default function NewsAdd() {
             NewForm.current.validateFields().then(res=>{
                 setCurrent(current + 1);
             }).catch(err=>console.log(err))
-
-        }else {
+        }
+        else {
             return null
         }
 
@@ -109,7 +112,15 @@ export default function NewsAdd() {
                  </Select>
                 </Form.Item>
             </Form></div>
-            <div className={current===1?'':style.hidden}>222</div>
+            <div className={current===1?'':style.hidden}>
+
+                <NewsEditor getText={(value)=>{
+                    console.log(value)
+
+                }}> </NewsEditor>
+
+
+            </div>
             <div className={current===2?'':style.hidden}>333</div>
 
 
