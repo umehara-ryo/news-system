@@ -1,13 +1,32 @@
-import {Button, Steps} from 'antd';
-import {useState} from "react";
+import {Button, Form, Input, Select, Steps} from 'antd';
+import {useEffect, useRef, useState} from "react";
 import style from './News.module.css'
+import axios from "axios";
+const {Option} = Select;
 
 export default function NewsAdd() {
 
-    const [current, setCurrent] = useState(2);
+    const NewForm = useRef(null);
+
+    const [current, setCurrent] = useState(0);
+    const [categoryList, setCategoryList] = useState([]);
+
+    useEffect(()=>{
+        axios.get(`/categories`).then(res=>{
+            setCategoryList(res.data)
+        })
+    },[])
 
     const handleNext = () => {
-        setCurrent(current + 1);
+        if(current === 0){
+            NewForm.current.validateFields().then(res=>{
+                setCurrent(current + 1);
+            }).catch(err=>console.log(err))
+
+        }else {
+            return null
+        }
+
     }
     const handlePrevious = () => {
         setCurrent(current - 1);
@@ -38,7 +57,58 @@ export default function NewsAdd() {
                     },
                 ]}
             />
-            <div className={current===0?'':style.hidden}>111</div>
+
+            <div className={current===0?'':style.hidden}> <Form
+                name="basic"
+                ref={NewForm}
+                labelCol={{
+                    span: 8,
+                }}
+                wrapperCol={{
+                    span: 24,
+                }}
+                style={{
+                    maxWidth: 1000,
+                }}
+                initialValues={{
+                    remember: true,
+                }}
+                //onFinish={onFinish}
+               // onFinishFailed={onFinishFailed}
+                autoComplete="off"
+            >
+                <Form.Item
+                    label="タイトル"
+                    name="title"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'タイトルをご入力ください!',
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item
+                    label="ニュース分類"
+                    name="categoryId"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'カテゴリーをお選びください!',
+                        },
+                    ]}
+                >
+                 <Select>
+                     {
+                         categoryList.map(item=>{
+                             return <Option key={item.id} value={item.id}>{item.title}</Option>
+                         })
+                     }
+                 </Select>
+                </Form.Item>
+            </Form></div>
             <div className={current===1?'':style.hidden}>222</div>
             <div className={current===2?'':style.hidden}>333</div>
 
