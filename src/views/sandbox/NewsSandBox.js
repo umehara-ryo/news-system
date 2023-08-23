@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import SideMenu from "../../components/sandbox/SideMenu";
 import TopHeader from "../../components/sandbox/TopHeader";
 import {Redirect, Route, Switch} from "react-router-dom";
@@ -11,9 +11,16 @@ import {Layout, theme} from "antd";
 import {Content} from "antd/es/layout/layout";
 import './NewsSandBox.css';
 import NewsRouter from "../../components/sandbox/NewsRouter";
-
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css'
 
 export default function NewsSandBox() {
+
+    NProgress.start();
+    useEffect(()=>{
+        NProgress.done();
+    })
+
     const {
         token: {colorBgContainer},
     } = theme.useToken();
