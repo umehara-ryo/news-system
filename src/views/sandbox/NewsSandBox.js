@@ -10,12 +10,12 @@ import NoPermission from "./nopermission/NoPermisson";
 import {Layout, theme} from "antd";
 import {Content} from "antd/es/layout/layout";
 import './NewsSandBox.css';
-
+import NewsRouter from "../../components/sandbox/NewsRouter";
 
 
 export default function NewsSandBox() {
     const {
-        token: { colorBgContainer },
+        token: {colorBgContainer},
     } = theme.useToken();
 
     return (
@@ -30,18 +30,10 @@ export default function NewsSandBox() {
                         padding: 24,
                         minHeight: 280,
                         background: colorBgContainer,
-                        overflow:'auto'
+                        overflow: 'auto'
                     }}
                 >
-                    <Switch>
-                        <Route path='/home' component={Home}></Route>
-                        <Route path='/user-manage/list' component={UserList}></Route>
-                        <Route path='/right-manage/role/list' component={RoleList}></Route>
-                        <Route path='/right-manage/right/list' component={RightList}></Route>
-                        <Redirect from='/' to='/home' exact></Redirect>
-                        <Route path="*" component={NoPermission}></Route>
-                    </Switch>
-
+                    <NewsRouter></NewsRouter>
                 </Content>
 
             </Layout>
