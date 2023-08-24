@@ -43,7 +43,9 @@ export default function NewsAdd(props) {
         setCurrent(current - 1);
     }
 
+    //localStorageからtokenを取り出す
     const user = JSON.parse(localStorage.getItem("token"));
+
     const handleSave = (auditState) => {
       axios.post(`/news`,{
           ...formInfo,
