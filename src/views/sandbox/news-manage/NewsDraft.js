@@ -33,7 +33,9 @@
             {
                 title: 'ニュースタイトル',
                 dataIndex: 'title',
-
+                render:(title,item)=>{
+                    return <a href={`#/news-manage/preview/${item.id}`}>{title}</a>
+                }
             },
             {
                 title: '作者',

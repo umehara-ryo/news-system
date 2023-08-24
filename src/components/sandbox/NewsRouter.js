@@ -14,6 +14,7 @@ import Published from "../../views/sandbox/publish-manage/Published";
 import Sunset from "../../views/sandbox/publish-manage/Sunset";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import NewsPreview from "../../views/sandbox/news-manage/NewsPreview";
 
 
 const localRouterListMap = {
@@ -24,6 +25,7 @@ const localRouterListMap = {
     "/news-manage/add":NewsAdd,
     "/news-manage/draft":NewsDraft,
     "/news-manage/category":NewsCategory,
+    "/news-manage/preview/:id":NewsPreview,
     "/audit-manage/audit":Audit,
     "/audit-manage/list":AuditList,
     "/publish-manage/unpublished":Unpublished,
@@ -50,6 +52,7 @@ export default function NewsRouter(){
 
         //console.log(localRouterListMap[item.key]);
 
+        //許可の検証
             return localRouterListMap[item.key] && (item.pagepermisson || item.routepermisson);
     }
 

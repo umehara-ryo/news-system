@@ -407,13 +407,13 @@
     },
     {
       "id": 4,
-      "title": "軍事世界",
-      "value": "軍事世界"
+      "title": "恋愛ドラマ",
+      "value": "恋愛ドラマ"
     },
     {
       "id": 5,
-      "title": "世界スポーツ",
-      "value": "世界スポーツ"
+      "title": "スポーツ",
+      "value": "スポーツ"
     },
     {
       "id": 6,
@@ -608,6 +608,21 @@
       "view": 0,
       "publishTime": 0,
       "id": 11
+    },
+    {
+      "title": "七瀬を好きになるということについて",
+      "categoryId": 4,
+      "content": "七瀬すき！七瀬最高！七瀬だいだいだいだいだい大好き！！！",
+      "region": "グローバル",
+      "author": "七瀬",
+      "roleId": 1,
+      "auditState": 0,
+      "publishState": 0,
+      "createTime": 1692865533727,
+      "star": 0,
+      "view": 0,
+      "publishTime": 0,
+      "id": 12
     }
   ]
 }
