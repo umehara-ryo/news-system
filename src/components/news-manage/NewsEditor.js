@@ -7,7 +7,7 @@ export default function NewsEditor(props) {
     const [text, setText] = useState('');
     const onBlur = (e) => {
         console.log('Change:', e.target.value);
-        props.getText(e.target.value);
+        props.getContent(e.target.value);
     };
 
     return(

@@ -1,18 +1,19 @@
-import {Button, Form, Input, Select, Steps} from 'antd';
-import {useEffect, useRef, useState} from "react";
+import {Button, Form, Input, message, Select, Steps,notification} from 'antd';
+import {useEffect, useRef, useState, } from "react";
 import style from './News.module.css'
 import axios from "axios";
 import NewsEditor from "../../../components/news-manage/NewsEditor";
 const {Option} = Select;
 
-
-export default function NewsAdd() {
+export default function NewsAdd(props) {
 
     const NewForm = useRef(null);
 
     const [current, setCurrent] = useState(0);
-
     const [categoryList, setCategoryList] = useState([]);
+
+    const [formInfo, setFormInfo] = useState({});
+    const [content, setContent] = useState('');
 
     useEffect(()=>{
         axios.get(`/categories`).then(res=>{
@@ -23,16 +24,49 @@ export default function NewsAdd() {
     const handleNext = () => {
         if(current === 0){
             NewForm.current.validateFields().then(res=>{
+                console.log(res);
+                setFormInfo(res);
                 setCurrent(current + 1);
             }).catch(err=>console.log(err))
         }
         else {
-            return null
+            console.log(formInfo,content);
+            if(content===''){
+                message.error('ニュースの内容は空白にできません!')
+            }else {
+                setCurrent(current + 1);
+            }
         }
 
     }
     const handlePrevious = () => {
         setCurrent(current - 1);
+    }
+
+    const user = JSON.parse(localStorage.getItem("token"));
+    const handleSave = (auditState) => {
+      axios.post(`/news`,{
+          ...formInfo,
+          'content':content,
+          "region": user.region?user.region:'グローバル',
+          "author": user.username,
+          "roleId": user.roleId,
+          "auditState": auditState,
+          "publishState": 0,
+          "createTime": Date.now(),
+          "star": 0,
+          "view": 0,
+          "publishTime": 0
+      }).then(res=>{
+          props.history.push(auditState===0?'/news-manage/draft':'audit-manage/list');
+      })
+
+        notification.info({
+            message: `お知らせ`,
+            description:
+                `${auditState===0?'下書き箱':'審査リスト'}でニュースをご覧いただけます`,
+            placement:"bottomRight",
+        });
     }
 
 
@@ -114,14 +148,15 @@ export default function NewsAdd() {
             </Form></div>
             <div className={current===1?'':style.hidden}>
 
-                <NewsEditor getText={(value)=>{
+                <NewsEditor getContent={(value)=>{
+                    setContent(value);
                     console.log(value)
 
                 }}> </NewsEditor>
 
 
             </div>
-            <div className={current===2?'':style.hidden}>333</div>
+            <div className={current===2?'':style.hidden}></div>
 
 
             <div>
@@ -137,8 +172,8 @@ export default function NewsAdd() {
 
                 {
                     current === 2 && <span>
-                        <Button type='primary'>下書き保存</Button>
-                        <Button danger>審査申請</Button>
+                        <Button type='primary' onClick={()=>handleSave(0)}>下書き保存</Button>
+                        <Button danger onClick={()=>handleSave(1)}>審査申請</Button>
                     </span>
                 }
 
