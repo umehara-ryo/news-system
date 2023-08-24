@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^12.8.3",
     "antd": "^5.8.4",
     "axios": "^0.21.1",
+    "moment": "^2.29.4",
+    "monent": "^0.0.2-security",
     "nprogress": "^0.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
