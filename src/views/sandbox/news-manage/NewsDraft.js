@@ -6,7 +6,7 @@
     import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 
-    export default function NewsDraft() {
+    export default function NewsDraft(props) {
 
         //localStorageからtokenを取り出す
         const user = JSON.parse(localStorage.getItem("token"));
@@ -58,6 +58,10 @@
                 render: (item)=>{
                     return　<div>
                         <Button  shape="circle" icon={<EditOutlined/>}
+                            onClick={()=>{
+                                props.history.push(`/news-manage/update/${item.id}`)
+                            }
+                        }
                         ></Button>
                         <Button type="primary" shape="circle" icon={<UploadOutlined />}
                         ></Button>

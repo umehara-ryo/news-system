@@ -15,6 +15,7 @@ import Sunset from "../../views/sandbox/publish-manage/Sunset";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import NewsPreview from "../../views/sandbox/news-manage/NewsPreview";
+import NewsUpdate from "../../views/sandbox/news-manage/NewsUpdate";
 
 
 const localRouterListMap = {
@@ -26,6 +27,7 @@ const localRouterListMap = {
     "/news-manage/draft":NewsDraft,
     "/news-manage/category":NewsCategory,
     "/news-manage/preview/:id":NewsPreview,
+    "/news-manage/update/:id":NewsUpdate,
     "/audit-manage/audit":Audit,
     "/audit-manage/list":AuditList,
     "/publish-manage/unpublished":Unpublished,

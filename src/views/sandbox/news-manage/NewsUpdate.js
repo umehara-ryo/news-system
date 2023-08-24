@@ -1,11 +1,13 @@
-import {Button, Form, Input, message, Select, Steps,notification} from 'antd';
-import {useEffect, useRef, useState, } from "react";
+import {Button, Form, Input, message, Select, Steps, notification} from 'antd';
+import {useEffect, useRef, useState,} from "react";
 import style from './News.module.css'
 import axios from "axios";
 import NewsEditor from "../../../components/news-manage/NewsEditor";
+import {LeftOutlined} from "@ant-design/icons";
+
 const {Option} = Select;
 
-export default function NewsAdd(props) {
+export default function NewsUpdate(props) {
 
     const NewForm = useRef(null);
 
@@ -15,25 +17,45 @@ export default function NewsAdd(props) {
     const [formInfo, setFormInfo] = useState({});
     const [content, setContent] = useState('');
 
-    useEffect(()=>{
-        axios.get(`/categories`).then(res=>{
+
+    useEffect(() => {
+        axios.get(`/categories`).then(res => {
             setCategoryList(res.data)
         })
-    },[])
+    }, [])
+
+    useEffect(() => {
+        console.log(props.match.params.id);
+        axios.get(`/news/${props.match.params.id}?_expand=category&_expand=role`)
+            .then(res => {
+
+                let {title,categoryId} = res.data;
+                //フォームに値を代入
+                NewForm.current.setFieldsValue(
+                    {
+                        title,
+                        categoryId
+                    }
+                )
+
+                //テキスト欄に値を代入
+                setContent(res.data.content)
+            })
+
+    }, [props.match.params])
 
     const handleNext = () => {
-        if(current === 0){
-            NewForm.current.validateFields().then(res=>{
+        if (current === 0) {
+            NewForm.current.validateFields().then(res => {
                 console.log(res);
                 setFormInfo(res);
                 setCurrent(current + 1);
-            }).catch(err=>console.log(err))
-        }
-        else {
-            console.log(formInfo,content);
-            if(content===''){
+            }).catch(err => console.log(err))
+        } else {
+            console.log(formInfo, content);
+            if (content === '') {
                 message.error('ニュースの内容は空白にできません!')
-            }else {
+            } else {
                 setCurrent(current + 1);
             }
         }
@@ -43,42 +65,35 @@ export default function NewsAdd(props) {
         setCurrent(current - 1);
     }
 
-    //localStorageからtokenを取り出す
-    const user = JSON.parse(localStorage.getItem("token"));
-
-    const handleSave = (auditState) => {
-      axios.post(`/news`,{
-          ...formInfo,
-          'content':content,
-          "region": user.region?user.region:'グローバル',
-          "author": user.username,
-          "roleId": user.roleId,
-          "auditState": auditState,
-          "publishState": 0,
-          "createTime": Date.now(),
-          "star": 0,
-          "view": 0,
-          "publishTime": 0
-      }).then(res=>{
-          props.history.push(auditState===0?'/news-manage/draft':'audit-manage/list');
-      })
+    const handleUpdate = (auditState) => {
+        axios.patch(`/news`, {
+            ...formInfo,
+            'content': content,
+            "auditState": auditState,
+        }).then(res => {
+            props.history.push(auditState === 0 ? '/news-manage/draft' : 'audit-manage/list');
+        })
 
         notification.info({
             message: `お知らせ`,
             description:
-                `${auditState===0?'下書き箱':'審査リスト'}でニュースをご覧いただけます`,
-            placement:"bottomRight",
+                `${auditState === 0 ? '下書き箱' : '審査リスト'}でニュースをご覧いただけます`,
+            placement: "bottomRight",
         });
     }
 
 
     return (
         <div>
+            <a href='#/news-manage/draft'>
+                <LeftOutlined/>
+                戻る
+            </a>
             <div style={{
                 textAlign: 'left',
                 fontSize: '25px',
                 marginBottom: '20px'
-            }}><b>ニュースを編纂</b></div>
+            }}><b>ニュースを更新</b></div>
             <Steps
                 current={current}
                 items={[
@@ -97,7 +112,8 @@ export default function NewsAdd(props) {
                 ]}
             />
 
-            <div className={current===0?'':style.hidden}> <Form
+            <div className={current === 0 ? '' : style.hidden}>
+                <Form
                 name="basic"
                 ref={NewForm}
                 labelCol={{
@@ -113,7 +129,7 @@ export default function NewsAdd(props) {
                     remember: true,
                 }}
                 //onFinish={onFinish}
-               // onFinishFailed={onFinishFailed}
+                // onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
                 <Form.Item
@@ -126,7 +142,7 @@ export default function NewsAdd(props) {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input/>
                 </Form.Item>
 
                 <Form.Item
@@ -139,26 +155,27 @@ export default function NewsAdd(props) {
                         },
                     ]}
                 >
-                 <Select>
-                     {
-                         categoryList.map(item=>{
-                             return <Option key={item.id} value={item.id}>{item.title}</Option>
-                         })
-                     }
-                 </Select>
+                    <Select>
+                        {
+                            categoryList.map(item => {
+                                return <Option key={item.id} value={item.id}>{item.title}</Option>
+                            })
+                        }
+                    </Select>
                 </Form.Item>
             </Form></div>
-            <div className={current===1?'':style.hidden}>
+            <div className={current === 1 ? '' : style.hidden}>
 
-                <NewsEditor getContent={(value)=>{
+                <NewsEditor
+                    content={content}
+                    getContent={(value) => {
                     setContent(value);
                     console.log(value)
-
                 }}> </NewsEditor>
 
-
             </div>
-            <div className={current===2?'':style.hidden}></div>
+
+            <div className={current === 2 ? '' : style.hidden}></div>
 
 
             <div>
@@ -174,8 +191,8 @@ export default function NewsAdd(props) {
 
                 {
                     current === 2 && <span>
-                        <Button type='primary' onClick={()=>handleSave(0)}>下書き保存</Button>
-                        <Button danger onClick={()=>handleSave(1)}>審査申請</Button>
+                        <Button type='primary' onClick={() => handleUpdate(0)}>下書き保存</Button>
+                        <Button danger onClick={() => handleUpdate(1)}>審査申請</Button>
                     </span>
                 }
 
