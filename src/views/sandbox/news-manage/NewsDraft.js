@@ -1,6 +1,6 @@
 
     import React, {useEffect, useState} from 'react'
-    import {Button, Table, Modal, Tag, Popover, Switch} from "antd";
+    import {Button, Table, Modal, Tag, Popover, Switch, notification} from "antd";
     import axios from "axios";
     import { DeleteOutlined,EditOutlined,UploadOutlined} from '@ant-design/icons';
     import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -63,7 +63,8 @@
                             }
                         }
                         ></Button>
-                        <Button type="primary" shape="circle" icon={<UploadOutlined />}
+                        <Button type="primary" shape="circle" icon={<UploadOutlined />}　
+                                onClick={()=>handleCheck(item.id)}
                         ></Button>
 
 
@@ -72,8 +73,21 @@
                 }
             },
         ];
-
-
+        
+        const handleCheck = (id) => {
+          axios.patch(`/news/${id}`,{
+              auditState:1
+          }).then(res=>{
+              props.history.push('/audit-manage/list');
+              notification.info({
+                  message: `お知らせ`,
+                  description:
+                      `審査リストでニュースをご覧いただけます`,
+                  placement:"bottomRight",
+              });
+          })
+        }
+        
         const {confirm} = Modal;
         const confirmDelete = (item)=>{
             confirm({
@@ -107,7 +121,7 @@
                        pagination={{
                            pageSize:5
                        }}
-                />;
+                />
             </div>
         )
     }
