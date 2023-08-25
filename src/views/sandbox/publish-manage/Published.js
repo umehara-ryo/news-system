@@ -1,23 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import axios from "axios";
+
 import NewsPublish from "../../../components/publish-manage/NewsPublish";
+import usePublish from "../../../components/publish-manage/usePublish";
+import {Button} from "antd";
 
 export default function Published() {
 
-    const [dataSource, setdataSource] = useState([])
-
-    const{username} = JSON.parse(localStorage.getItem('token'))
-    useEffect(()=>{
-        axios(`/news/?author=${username}&publishState=2&_expand=category`)
-            .then(res=>{
-                console.log(res.data)
-                setdataSource(res.data);
-            })
-    },[username])
+const {dataSource,handleSunset} = usePublish(2);
 
     return (
         <div>
-            <NewsPublish dataSource={dataSource}> </NewsPublish>
+            <NewsPublish dataSource={dataSource}　button={(id)=><Button  danger onClick={()=>handleSunset(id)}>非公開</Button>}
+            > </NewsPublish>
         </div>
     )
 }

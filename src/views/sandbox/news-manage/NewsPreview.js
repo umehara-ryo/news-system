@@ -121,6 +121,7 @@ export default function NewsPreview(props) {
                         </div>
                         <Drawer
                             title="お知らせ"
+                            keyboard='true'
                             placement="right"
                             closable={false}
                             onClose={onClose}

@@ -32,9 +32,10 @@ export default function NewsPublish(props) {
         {
             title: '操作',
             render: (item) => {
-                return <div>
-                   <Button>ボタン</Button>
-                </div>
+                return(
+                <div>
+                    {props.button(item.id)}
+                </div>)
             }
         },
     ];
