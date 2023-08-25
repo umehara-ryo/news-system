@@ -1,9 +1,23 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import axios from "axios";
+import NewsPublish from "../../../components/publish-manage/NewsPublish";
 
 export default function Published() {
+
+    const [dataSource, setdataSource] = useState([])
+
+    const{username} = JSON.parse(localStorage.getItem('token'))
+    useEffect(()=>{
+        axios(`/news/?author=${username}&publishState=2&_expand=category`)
+            .then(res=>{
+                console.log(res.data)
+                setdataSource(res.data);
+            })
+    },[username])
+
     return (
         <div>
-            Published
+            <NewsPublish dataSource={dataSource}> </NewsPublish>
         </div>
     )
 }
