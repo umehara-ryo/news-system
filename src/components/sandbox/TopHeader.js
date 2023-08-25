@@ -9,10 +9,11 @@ import type { MenuProps } from 'antd';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import Avatar from "antd/es/avatar/avatar";
 import {withRouter} from 'react-router-dom'
+import {connect} from "react-redux";
 
 function TopHeader(props){
 
-    const [collapsed, setCollapsed] = useState(false);
+    //const [collapsed, setCollapsed] = useState(false);
 
     const {role:{roleName},username} = JSON.parse(localStorage.getItem('token'));
 
@@ -56,8 +57,8 @@ function TopHeader(props){
             >
                 <Button
                     type="text"
-                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                    onClick={() => setCollapsed(!collapsed)}
+                    icon={props.isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                    onClick={() => props.changeCollapsed()}
                     style={{
                         fontSize: '16px',
                         width: 64,
@@ -82,4 +83,24 @@ function TopHeader(props){
         </div>
     )
 }
-export default withRouter(TopHeader);
+
+//connect(
+// mapStateToProps
+// mapDishpatchToProps)
+
+const mapStateToProps = ({CollapsedReducer:{isCollapsed}})=>{
+    // console.log(state)
+    return {
+        isCollapsed
+    }
+}
+
+const mapDispatchToProps = {
+    changeCollapsed(){
+        return {
+            type: "change_collapsed"
+            // payload:
+        }//action
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(TopHeader));
