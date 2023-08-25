@@ -56,23 +56,59 @@ export default function AuditList(props) {
             render: (item)=>{
                 return　<div>
                     {
-                        item.auditState===1 && <Button danger >撤回</Button>
+                        item.auditState===1 && <Button danger　onClick={()=>handleRevert(item)} >撤回</Button>
                     }
 
                     {
-                        item.auditState===2 && <Button type='primary'>公開</Button>
+                        item.auditState===2 && <Button type='primary' onClick={()=>handlePublish(item.id)}>公開</Button>
                     }
                     {
-                        item.auditState===3 &&<Button>修正</Button>
+                        item.auditState===3 &&<Button onClick={()=>handleUpdate(item.id)}>修正</Button>
                     }
-
-
 
 
                 </div>
             }
         },
     ];
+
+    const handleRevert = (item) => {
+
+        //ページから削除
+        setDataSourse(dataSource.filter(data=>data.id!=item.id));
+
+        //データベースを更新
+        axios.patch(`/news/${item.id}`,
+            {
+                auditState:0
+            }).then(res=>{
+            notification.info({
+                message: `お知らせ`,
+                description:
+                    `下書き箱でニュースをご覧いただけます`,
+                placement:"bottomRight",
+            });
+        })
+
+    }
+    const handleUpdate = (id) => {
+        props.history.push(`/news-manage/update/${id}`)
+
+    }
+    const handlePublish = (id) => {
+        axios.patch(`/news/${id}`,{
+            publishState:2
+        }).then(res=>{
+            props.history.push('/publish-manage/published');
+            notification.info({
+                message: `お知らせ`,
+                description:
+                    `「公開管理/公開済み」でニュースをご覧いただけます`,
+                placement:"bottomRight",
+            });
+        })
+
+    }
 
     const handleCheck = (id) => {
         axios.patch(`/news/${id}`,{
