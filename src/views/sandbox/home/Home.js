@@ -19,10 +19,12 @@ const data = [
 
 export default function Home() {
     const [open, setOpen] = useState(false);
+    const [pieChart, setPieChart] = useState(null);
     const [viewList,setViewList] = useState([]);
     const [starList,setStarList] = useState([]);
     const [allList, setallList] = useState([])
     const barRef = useRef();
+    const pieRef = useRef();
     useEffect(()=>{
         axios.get('/news?publishState=2&_expand=category&_sort=view&_order=desc&_limit=6')
             .then(res=>{
@@ -97,8 +99,67 @@ export default function Home() {
     }
 
 
+    const renderPieView = (obj) => {
+        //データ処理
+
+        var currentList =allList.filter(item=>item.author===user.username)
+        var groupObj = _.groupBy(currentList,item=>item.category.title)
+        var list = []
+        for(var i in groupObj){
+            list.push({
+                name:i,
+                value:groupObj[i].length
+            })
+        }
+        console.log(list);
+        var myChart;
+        if(!pieChart){
+            myChart = ECharts.init(pieRef.current);
+            setPieChart(myChart)
+        }else{
+            myChart = pieChart
+        }
+        var option;
+
+        option = {
+            title: {
+                text: '現ユーザーニュースカテゴリ図',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+            },
+            series: [
+                {
+                    name: '公開数',
+                    type: 'pie',
+                    radius: '50%',
+                    data: list,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+
+    }
+
     const showDrawer = () => {
-        setOpen(true);
+        setTimeout(()=>{
+            setOpen(true);
+            renderPieView();
+        },0)
+
     };
     const onClose = () => {
         setOpen(false);
