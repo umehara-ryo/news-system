@@ -34,35 +34,24 @@ export default function NewsCategory() {
 
     const columns = [
         {
-            title: 'ニュースタイトル',
+            title: 'ID',
+            dataIndex: 'id',
+            render: (id) => {
+                return <b>{id}</b>
+            }
+        },
+        {
+            title: 'コラム名',
             dataIndex: 'title',
-            render:(title,item)=>{
-                return <a href={`#/news-manage/preview/${item.id}`}>{title}</a>
-            }
-        },
-        {
-            title: '作者',
-            dataIndex: 'author',
-            render: (author)=>{
-                return  <Tag color='lightpink'>{author}</Tag>
+            onCell: (record) => ({
+                record,
+                editable: true,
+                dataIndex: 'title',
+                title: 'コラム名',
+                handleSave: handleSave,
+            }),
 
-            }
         },
-        {
-            title: 'ニュース分類',
-            dataIndex: 'category',
-            render: (category)=>{
-                return  <i>{category.title}</i>
-            }
-        },
-        {
-            title: '審査状態',
-            dataIndex: 'auditState',
-            render: (auditState)=>{
-                return <Tag >auditState</Tag>
-            }
-        },
-
         {
             title: "操作",
             render: (item) => {
