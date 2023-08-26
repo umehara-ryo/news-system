@@ -80,7 +80,7 @@ export default function NewsPreview(props) {
     };
     const containerStyle = {
         position: 'relative',
-        height: 400,
+        //height: 400,
         padding: 30,
         overflow: 'hidden',
         textAlign: 'center',

@@ -469,8 +469,8 @@
       "auditState": 2,
       "publishState": 2,
       "createTime": 1615777743864,
-      "star": 1000,
-      "view": 2005,
+      "star": 10,
+      "view": 25,
       "id": 1,
       "publishTime": 1615778496314
     },
@@ -574,7 +574,7 @@
       "auditState": 2,
       "publishState": 2,
       "createTime": 1615778891518,
-      "star": 781,
+      "star": 81,
       "view": 889,
       "id": 8,
       "publishTime": 1615778917615
@@ -634,8 +634,8 @@
       "auditState": 2,
       "publishState": 2,
       "createTime": 1693023663457,
-      "star": 0,
-      "view": 0,
+      "star": 3203,
+      "view": 4430,
       "publishTime": 1693024206352,
       "id": 13
     },
@@ -649,8 +649,8 @@
       "auditState": 2,
       "publishState": 2,
       "createTime": 1693024027784,
-      "star": 0,
-      "view": 0,
+      "star": 2340,
+      "view": 6780,
       "publishTime": 1693024210952,
       "id": 14
     },
@@ -664,8 +664,8 @@
       "auditState": 2,
       "publishState": 2,
       "createTime": 1693024158082,
-      "star": 0,
-      "view": 0,
+      "star": 540,
+      "view": 5660,
       "publishTime": 1693024212958,
       "id": 15
     },
@@ -679,10 +679,25 @@
       "auditState": 2,
       "publishState": 2,
       "createTime": 1693024195944,
-      "star": 0,
-      "view": 0,
+      "star": 888,
+      "view": 5675,
       "publishTime": 1693024214856,
       "id": 16
+    },
+    {
+      "title": "iPhone15 Pro、チタニウム筐体でどの程度軽くなる？",
+      "categoryId": 3,
+      "content": "Phone15 ProとiPhone15 Pro Maxは、筐体にチタニウム素材を採用すると噂されています。軽くて強度の高いチタニウムを使うことで、ステンレススチール製のiPhone14 ProやiPhone14 Pro Maxと比べてどの程度軽くなるかを米メディア9to5Macが試算しています。\n \n■3行で分かる、この記事のポイント\n1. iPhone15 Proは筐体に軽量なチタニウム素材を採用と噂。\n2. チタニウム採用による軽量化効果を米メディアが試算。\n3. iPhone15 ProはiPhone14 Proより8%程度軽くなる。\n\n \n\nチタニウム筐体を採用と噂のiPhone15 Pro\n現地時間2023年9月12日と噂の発表イベントで披露されるiPhone15シリーズの上位モデル、iPhone15 ProとiPhone15 Pro Maxは、筐体が従来のステンレススチール製からチタニウム製に変更される、と噂されています。\n \n軽くて強度が高く、腐食に強い特徴を持つチタニウムの採用により、iPhone15 Proはステンレススチール製のiPhone14 Proよりも軽くなるものの、アルミニウム製のiPhone14ほど軽くはならない、と9to5Macは予想しています。\n \nただし、同メディアの予想は筐体素材の変更のみを考慮したものであり、バッテリーやカメラの変更は考慮していません。iPhone15 Pro Maxは、高倍率ズーム可能なペリスコープレンズカメラを搭載するとの噂があり、採用された場合は重量増につながる可能性もあります。\n \n\n\niPhone15 ProはiPhone14 Proより12グラム軽い？\n以下が同メディアによるiPhone15 Proの予想重量です。\n \niPhone15 Pro（191グラム）は、iPhone14 Pro（203グラム）よりも12グラム軽く、iPhone15 Pro Max（221グラム）はiPhone14 Pro Max（240グラム）よりも19グラム軽くなるとみられます。これは、割合にして約8％軽くなるとの予想です。\n \nなお、iPhone15 ProとiPhone14 Proの差である12グラムは、iPhone14 ProとiPhone14の差である34グラムよりも小さいため、iPhone15 Proの軽さは体感できるほどではないかもしれません。",
+      "region": "グローバル",
+      "author": "七瀬",
+      "roleId": 1,
+      "auditState": 2,
+      "publishState": 2,
+      "createTime": 1693024449715,
+      "star": 2220,
+      "view": 3330,
+      "publishTime": 1693024460197,
+      "id": 17
     }
   ]
 }

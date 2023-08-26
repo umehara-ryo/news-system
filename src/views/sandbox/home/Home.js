@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Col, List, Row} from "antd";
+import {Col, Drawer, List, Row} from "antd";
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 import axios from "axios";
@@ -18,7 +18,7 @@ const data = [
 
 
 export default function Home() {
-
+    const [open, setOpen] = useState(false);
     const [viewList,setViewList] = useState([]);
     const [starList,setStarList] = useState([]);
     const [allList, setallList] = useState([])
@@ -97,6 +97,13 @@ export default function Home() {
     }
 
 
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
     return (
         <div>
             <Row gutter={16}>
@@ -136,7 +143,7 @@ export default function Home() {
                             />
                         }
                         actions={[
-                            <SettingOutlined key="setting" />,
+                            <SettingOutlined key="setting" onClick={showDrawer}/>,
                             <EditOutlined key="edit" />,
                             <EllipsisOutlined key="ellipsis" />,
                         ]}
@@ -158,6 +165,13 @@ export default function Home() {
                 </Col>
             </Row>
 
+            <Drawer  width='500px' title="個人情報" placement="right" onClose={onClose} open={open}>
+                <div ref={pieRef} style={{
+                    width: '100%',
+                    height: "400px",
+                    marginTop: "30px"
+                }}></div>
+            </Drawer>
 
             <div ref={barRef} style={{
                 width: '100%',
