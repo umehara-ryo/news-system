@@ -5,10 +5,12 @@ const { TextArea } = Input;
 export default function NewsEditor(props) {
 
     const textUpdate = useRef('');
+    const [currentContent, setCurrentContent] = useState(0);
 
     useEffect(()=>{
         console.log(props.content)
         console.log(textUpdate.current)
+        setCurrentContent(props.content);
     })
 
 
@@ -21,8 +23,8 @@ export default function NewsEditor(props) {
     return(
         <div>
             {
-                props.content && <TextArea
-                    defaultValue={props.content}
+                <TextArea
+                    defaultValue={currentContent?currentContent:''}
                     ref={textUpdate}
                     showCount
                     maxLength={10000}

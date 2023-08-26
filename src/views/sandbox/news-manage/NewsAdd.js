@@ -60,7 +60,7 @@ export default function NewsAdd(props) {
           "view": 0,
           "publishTime": 0
       }).then(res=>{
-          props.history.push(auditState===0?'/news-manage/draft':'audit-manage/list');
+          props.history.push(auditState===0?'/news-manage/draft':'/audit-manage/list');
       })
 
         notification.info({
@@ -153,10 +153,7 @@ export default function NewsAdd(props) {
                 <NewsEditor getContent={(value)=>{
                     setContent(value);
                     console.log(value)
-
-                }}> </NewsEditor>
-
-
+                }}></NewsEditor>
             </div>
             <div className={current===2?'':style.hidden}></div>
 
