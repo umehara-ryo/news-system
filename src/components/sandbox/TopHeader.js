@@ -17,7 +17,6 @@ function TopHeader(props){
 
     const {role:{roleName},username} = JSON.parse(localStorage.getItem('token'));
 
-
     const {Header} = Layout;
     const {
         token: { colorBgContainer },
